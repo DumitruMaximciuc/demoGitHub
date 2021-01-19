@@ -5,7 +5,11 @@
  */
 package demogithub;
 
+import ClassesMetier.Etudiant;
+import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,44 +33,98 @@ public class FrmMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnDémonstation = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblEtudiants = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnDémonstation.setText("Démonstration");
-        btnDémonstation.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnDémonstationMouseClicked(evt);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
+
+        tblEtudiants.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Numero", "Prenom", "Age"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tblEtudiants.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEtudiantsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblEtudiants);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(264, 264, 264)
-                .addComponent(btnDémonstation, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(404, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(338, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(114, 114, 114)
-                .addComponent(btnDémonstation)
-                .addContainerGap(363, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(275, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDémonstationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDémonstationMouseClicked
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        int nb = 17;
-        JOptionPane.showMessageDialog(this, "La valeur de nb = "+nb);
-        int a = 0;
-        int j = 12;
-    }//GEN-LAST:event_btnDémonstationMouseClicked
+        
+        Etudiant et1 = new Etudiant(1, "Aaron", 20);
+        Etudiant et2 = new Etudiant(2, "Orel", 19);
+        Etudiant et3 = new Etudiant(3, "Nathane", 21);
+        
+        ArrayList<Etudiant> mesEtudiants = new ArrayList();
+        //caster == convertir
+        mesEtudiants.add(et1);
+        mesEtudiants.add(et2);
+        mesEtudiants.add(et3);
+        
+        //(DefaultTableModel) convertir tblEtudiants.getModel() en DefaultTableModel
+        DefaultTableModel dtmEtudiants = (DefaultTableModel) tblEtudiants.getModel();
+        Vector v;
+        
+        
+        
+        //Pour chaque etudiants que j'appelle unEtu qui se trouve dans ma collection mesEtudiants
+        for(Etudiant unEtu:mesEtudiants)
+        {
+            v = new Vector();
+            v.add(unEtu.getNrEtudiant());
+            v.add(unEtu.getPrenom());
+            v.add(unEtu.getAge());
+            dtmEtudiants.addRow(v);
+        }
+        
+       
+        
+    }//GEN-LAST:event_formWindowOpened
+
+    private void tblEtudiantsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEtudiantsMouseClicked
+        // TODO add your handling code here:
+        
+        String choix = tblEtudiants.getValueAt(tblEtudiants.getSelectedRow(), tblEtudiants.getSelectedColumn()).toString();
+        JOptionPane.showMessageDialog(this, choix);
+    }//GEN-LAST:event_tblEtudiantsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -104,6 +162,7 @@ public class FrmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDémonstation;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblEtudiants;
     // End of variables declaration//GEN-END:variables
 }
